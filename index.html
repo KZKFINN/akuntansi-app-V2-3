@@ -3,10 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#3b82f6">
   <title>Akuntansi Pro - Modern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
   <div class="app">
@@ -15,7 +19,7 @@
         <div class="logo">AP</div>
         <div class="brand-text">
           <h1>Akuntansi Pro</h1>
-          <small>Modern & Offline-ready</small>
+          <small>Modern & Offline-first</small>
         </div>
       </div>
 
@@ -25,17 +29,39 @@
       </div>
 
       <div class="menu">
-        <button class="menu-btn active" data-screen="dashboard">🏠 Dashboard</button>
-        <button class="menu-btn" data-screen="add">➕ Transaksi</button>
-        <button class="menu-btn" data-screen="transactions">📋 Riwayat</button>
-        <button class="menu-btn" data-screen="piutang">📄 Piutang</button>
-        <button class="menu-btn" data-screen="hutang">📊 Hutang</button>
-        <button class="menu-btn" data-screen="reports">📈 Laporan</button>
+        <button class="menu-btn active" data-screen="dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" /></svg>
+          Dashboard
+        </button>
+        <button class="menu-btn" data-screen="add">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z" clip-rule="evenodd" /></svg>
+          Transaksi
+        </button>
+        <button class="menu-btn" data-screen="transactions">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h14a1 1 0 011 1v1a1 1 0 01-1 1H3a1 1 0 01-1-1V3zM3 7a1 1 0 000 2h14a1 1 0 100-2H3zM3 11a1 1 0 100 2h14a1 1 0 100-2H3zM3 15a1 1 0 100 2h14a1 1 0 100-2H3z" /></svg>
+          Riwayat
+        </button>
+        <button class="menu-btn" data-screen="piutang">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3.5 2.75a.75.75 0 00-1.5 0v14.5a.75.75 0 001.5 0v-1.352a3.993 3.993 0 012.338-.805c.53 0 1.037.1 1.506.273a.75.75 0 00.865-.967 11.2 11.2 0 00-2.45-1.127.75.75 0 00-.71.054A2.5 2.5 0 003.5 4.5v-1.75zM16.5 2.75a.75.75 0 00-1.5 0v1.75a2.5 2.5 0 00-2.25 2.45a.75.75 0 00.71.054 11.203 11.203 0 00-2.45 1.127.75.75 0 00.866.967c.468-.173.976-.273 1.505-.273a3.993 3.993 0 012.338.805v1.352a.75.75 0 001.5 0V2.75z" /></svg>
+          Piutang
+        </button>
+        <button class="menu-btn" data-screen="hutang">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 0a.75.75 0 01.75-.75h13.5a.75.75 0 01.75.75v9.5a.75.75 0 01-.75.75H3.25a.75.75 0 01-.75-.75v-9.5z" clip-rule="evenodd" /><path d="M6 10a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 016 10z" /></svg>
+          Hutang
+        </button>
+        <button class="menu-btn" data-screen="reports">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M15.5 2.5a3 3 0 00-3-3H7.5a3 3 0 00-3 3v15a3 3 0 003 3h5a3 3 0 003-3V2.5zM7.5 1A1.5 1.5 0 019 2.5V3h2V2.5A1.5 1.5 0 0112.5 1h-5zM11 17a1.5 1.5 0 01-1.5 1.5h-1A1.5 1.5 0 017 17v-1h4v1z" /></svg>
+          Laporan
+        </button>
       </div>
 
       <div class="bottom-actions">
-        <button id="btn-backup" class="ghost">Backup</button>
-        <button id="btn-import" class="ghost">Restore</button>
+        <button id="btn-theme-toggle" class="ghost icon-btn">
+          <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.518a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2zM10 18a.75.75 0 01.75-.75v-1.018a.75.75 0 01-1.5 0v1.018A.75.75 0 0110 18zM17.25 10a.75.75 0 01-.75.75h-1.018a.75.75 0 010-1.5h1.018a.75.75 0 01.75.75zM3.75 10a.75.75 0 01-.75.75H2a.75.75 0 010-1.5h1.018a.75.75 0 01.75.75zM15.06 5.94a.75.75 0 010-1.06l.72-.72a.75.75 0 111.06 1.06l-.72.72a.75.75 0 01-1.06 0zM5.94 15.06a.75.75 0 010-1.06l.72-.72a.75.75 0 111.06 1.06l-.72.72a.75.75 0 01-1.06 0zM15.78 15.06a.75.75 0 01-1.06 0l-.72-.72a.75.75 0 111.06-1.06l.72.72a.75.75 0 010 1.06zM4.94 4.94a.75.75 0 01-1.06 0L3.16 4.22a.75.75 0 011.06-1.06l.72.72a.75.75 0 010 1.06zM10 5a5 5 0 100 10 5 5 0 000-10z" clip-rule="evenodd" /></svg>
+          <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="display:none;"><path fill-rule="evenodd" d="M7.455 2.164A8.969 8.969 0 001.03 8.353a8.995 8.995 0 006.11 8.527 1.1 1.1 0 001.31-.926 7.42 7.42 0 01-1.01-4.015 7.42 7.42 0 015.02-6.93 1.1 1.1 0 00.173-1.42 8.96 8.96 0 00-5.18-1.424z" clip-rule="evenodd" /></svg>
+        </button>
+        <button id="btn-backup" class="ghost">Backup Data</button>
+        <button id="btn-import" class="ghost">Restore Data</button>
       </div>
     </nav>
 
@@ -48,11 +74,11 @@
         <div class="cards">
           <div class="card stat">
             <div class="label">Total Pendapatan</div>
-            <div id="total-income" class="big">Rp 0</div>
+            <div id="total-income" class="big value-income">Rp 0</div>
           </div>
           <div class="card stat">
             <div class="label">Total Pengeluaran</div>
-            <div id="total-expense" class="big">Rp 0</div>
+            <div id="total-expense" class="big value-expense">Rp 0</div>
           </div>
           <div class="card stat">
             <div class="label">Laba/Rugi</div>
@@ -78,7 +104,7 @@
             <div class="field"><label>Jumlah (Rp)</label><input id="transaction-amount" type="number" required></div>
             <div class="field full"><label>Keterangan</label><input id="transaction-description" type="text"></div>
             <div class="field full actions">
-              <button class="primary" type="submit">Simpan</button>
+              <button class="primary" type="submit">Simpan Transaksi</button>
               <button type="button" id="reset-transaction" class="ghost">Reset</button>
             </div>
           </form>
@@ -88,17 +114,17 @@
       <section id="transactions" class="screen" style="display:none">
         <div class="card">
           <h3>Riwayat Transaksi</h3>
-          <div id="transactions-full" class="transactions"></div>
+          <div id="transactions-full" class="transactions full-height"></div>
         </div>
       </section>
 
       <section id="piutang" class="screen" style="display:none">
         <div class="card">
-          <h3>Piutang</h3>
+          <h3>Daftar Piutang</h3>
           <form id="add-piutang-form" class="form-row">
             <div class="field"><label>Nama</label><input id="piutang-name" required></div>
             <div class="field"><label>Jumlah</label><input id="piutang-amount" type="number" required></div>
-            <div class="field full actions"><button class="primary" type="submit">Simpan Piutang</button></div>
+            <div class="field full actions"><button class="primary" type="submit">Tambah Piutang</button></div>
           </form>
           <div id="piutang-list" class="transactions"></div>
         </div>
@@ -106,11 +132,11 @@
 
       <section id="hutang" class="screen" style="display:none">
         <div class="card">
-          <h3>Hutang</h3>
+          <h3>Daftar Hutang</h3>
           <form id="add-hutang-form" class="form-row">
             <div class="field"><label>Nama</label><input id="hutang-name" required></div>
             <div class="field"><label>Jumlah</label><input id="hutang-amount" type="number" required></div>
-            <div class="field full actions"><button class="primary" type="submit">Simpan Hutang</button></div>
+            <div class="field full actions"><button class="primary" type="submit">Tambah Hutang</button></div>
           </form>
           <div id="hutang-list" class="transactions"></div>
         </div>
@@ -118,19 +144,31 @@
 
       <section id="reports" class="screen" style="display:none">
         <div class="card">
-          <h3>Laporan</h3>
-          <p>Total Piutang Belum Lunas: <strong id="total-piutang">Rp 0</strong></p>
-          <p>Total Hutang Belum Lunas: <strong id="total-hutang">Rp 0</strong></p>
+          <h3>Laporan Keuangan</h3>
+          <p>Total Piutang Belum Lunas: <strong id="total-piutang" class="value-income">Rp 0</strong></p>
+          <p>Total Hutang Belum Lunas: <strong id="total-hutang" class="value-expense">Rp 0</strong></p>
           <div class="actions-row">
             <button id="export-json" class="ghost">Export JSON</button>
-            <button id="clear-data" class="ghost">Reset Data</button>
+            <button id="clear-data" class="danger">Reset Semua Data</button>
           </div>
         </div>
       </section>
-
     </main>
   </div>
-
+  
+  <div id="toast-container"></div>
+  <div id="modal-container" class="modal-hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3 id="modal-title">Konfirmasi</h3>
+      <p id="modal-body">Apakah Anda yakin?</p>
+      <div class="modal-actions">
+        <button id="modal-cancel" class="ghost">Batal</button>
+        <button id="modal-confirm" class="primary">Yakin</button>
+      </div>
+    </div>
+  </div>
+  
   <script src="script.js"></script>
 </body>
 </html>
