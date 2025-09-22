@@ -1,136 +1,115 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#2563eb">
-  <title>Akuntansi Pro - Modern</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <title>Akuntansi Pro — Modern (Auth)</title>
+
+  <!-- Chart.js & Lucide (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide/dist/lucide.min.js"></script>
+
+  <!-- Firebase (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <nav class="sidebar" aria-label="Sidebar">
+  <div class="app" id="app">
+    <aside class="sidebar" aria-label="Main navigation">
       <div class="brand">
-        <div class="logo">AP</div>
-        <div class="brand-text">
+        <div class="logo" aria-hidden="true">AP</div>
+        <div class="brand-info">
           <h1>Akuntansi Pro</h1>
-          <small>Modern & Offline-ready</small>
+          <p class="muted">Clean financials</p>
         </div>
       </div>
-
-      <div class="balance-card">
-        <div class="label">Saldo Kas</div>
-        <div id="saldo-kas" class="value">Rp 0</div>
+      <nav class="nav" role="navigation" aria-label="Sidebar menu">
+        <button class="nav-btn active" data-screen="dashboard" title="Dashboard"><i data-lucide="home"></i><span>Dashboard</span></button>
+        <button class="nav-btn" data-screen="transactions" title="Transactions"><i data-lucide="list"></i><span>Transactions</span></button>
+        <button class="nav-btn" data-screen="add" title="Add Transaction"><i data-lucide="plus-circle"></i><span>Add</span></button>
+        <button class="nav-btn" data-screen="piutang" title="Receivables"><i data-lucide="file-text"></i><span>Receivables</span></button>
+        <button class="nav-btn" data-screen="hutang" title="Payables"><i data-lucide="credit-card"></i><span>Payables</span></button>
+        <button class="nav-btn" data-screen="reports" title="Reports"><i data-lucide="bar-chart-2"></i><span>Reports</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <label class="switch" title="Toggle dark mode"><input id="themeToggle" type="checkbox" /><span class="slider"></span></label>
+        <div class="small-actions">
+          <button id="exportBtn" class="ghost" title="Export JSON"><i data-lucide="download-cloud"></i></button>
+          <button id="importBtn" class="ghost" title="Import JSON"><i data-lucide="upload-cloud"></i></button>
+        </div>
       </div>
+    </aside>
 
-      <div class="menu">
-        <button class="menu-btn active" data-screen="dashboard">🏠 Dashboard</button>
-        <button class="menu-btn" data-screen="add">➕ Transaksi</button>
-        <button class="menu-btn" data-screen="transactions">📋 Riwayat</button>
-        <button class="menu-btn" data-screen="piutang">📄 Piutang</button>
-        <button class="menu-btn" data-screen="hutang">📊 Hutang</button>
-        <button class="menu-btn" data-screen="reports">📈 Laporan</button>
-      </div>
-
-      <div class="bottom-actions">
-        <button id="btn-backup" class="ghost">Backup</button>
-        <button id="btn-import" class="ghost">Restore</button>
-      </div>
-    </nav>
-
-    <main class="main">
+    <main class="main" role="main">
       <header class="topbar">
-        <div class="search"><input id="search" placeholder="Cari transaksi..." /></div>
+        <div class="search"><input id="search" aria-label="Search transactions" placeholder="Search transactions, category or notes..." /><i data-lucide="search"></i></div>
+        <div class="top-actions">
+          <button id="reportBtn" class="primary" title="Generate quick report">Generate Report</button>
+          <!-- User profile area -->
+          <div id="user-profile" class="user-profile" style="display:none">
+            <img id="user-photo" src="" alt="avatar" />
+            <span id="user-name"></span>
+            <button id="signOutBtn" class="ghost">Logout</button>
+          </div>
+        </div>
       </header>
 
-      <section id="dashboard" class="screen">
+      <!-- Authentication area shown when not signed in -->
+      <div id="auth-area" class="card auth-card" style="display:none;">
+        <div class="auth-inner">
+          <div>
+            <h2>Welcome to Akuntansi Pro</h2>
+            <p class="muted">Sign in to sync your data across devices</p>
+          </div>
+          <div>
+            <button id="googleSignIn" class="primary"><i data-lucide="log-in"></i> Sign in with Google</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREENS -->
+      <section id="dashboard" class="screen" data-screen>
         <div class="cards">
-          <div class="card stat">
-            <div class="label">Total Pendapatan</div>
-            <div id="total-income" class="big">Rp 0</div>
-          </div>
-          <div class="card stat">
-            <div class="label">Total Pengeluaran</div>
-            <div id="total-expense" class="big">Rp 0</div>
-          </div>
-          <div class="card stat">
-            <div class="label">Laba/Rugi</div>
-            <div id="profit-loss" class="big">Rp 0</div>
-          </div>
+          <div class="card stat"><div class="label">Total Income</div><div id="total-income" class="value">Rp 0</div></div>
+          <div class="card stat"><div class="label">Total Expense</div><div id="total-expense" class="value">Rp 0</div></div>
+          <div class="card stat"><div class="label">Balance</div><div id="balance" class="value">Rp 0</div></div>
         </div>
-
-        <div class="card">
-          <h3>Transaksi Terakhir</h3>
-          <div id="transactions-list" class="transactions"></div>
+        <div class="grid">
+          <div class="card chart-card"><h3>Income vs Expense (Last 12 months)</h3><canvas id="lineChart" aria-label="Income vs Expense chart" role="img"></canvas></div>
+          <div class="card chart-card"><h3>Category Breakdown</h3><canvas id="pieChart" aria-label="Category breakdown" role="img"></canvas></div>
         </div>
+        <div class="card"><h3>Recent Transactions</h3><div id="transactions-list" class="transactions"></div></div>
       </section>
 
-      <section id="add" class="screen" style="display:none">
-        <div class="card">
-          <h3>Tambah Transaksi</h3>
-          <form id="transaction-form" class="form-row">
-            <div class="field">
-              <label>Jenis</label>
-              <select id="transaction-type"><option value="pemasukan">Pemasukan</option><option value="pengeluaran">Pengeluaran</option></select>
-            </div>
-            <div class="field"><label>Kategori</label><input id="transaction-category" type="text" required></div>
-            <div class="field"><label>Jumlah (Rp)</label><input id="transaction-amount" type="number" required></div>
-            <div class="field full"><label>Keterangan</label><input id="transaction-description" type="text"></div>
-            <div class="field full actions">
-              <button class="primary" type="submit">Simpan</button>
-              <button type="button" id="reset-transaction" class="ghost">Reset</button>
-            </div>
-          </form>
-        </div>
+      <section id="transactions" class="screen" data-screen style="display:none">
+        <div class="card"><h3>All Transactions</h3><div class="controls"><select id="filterType" aria-label="Filter by type"><option value="">All</option><option value="pemasukan">Income</option><option value="pengeluaran">Expense</option></select><input id="filterCategory" placeholder="Filter by category" /><button id="clearFilters" class="ghost">Clear</button></div><div id="transactions-full" class="transactions"></div></div>
       </section>
 
-      <section id="transactions" class="screen" style="display:none">
-        <div class="card">
-          <h3>Riwayat Transaksi</h3>
-          <div id="transactions-full" class="transactions"></div>
-        </div>
+      <section id="add" class="screen" data-screen style="display:none">
+        <div class="card"><h3>Add Transaction</h3><form id="transaction-form" novalidate><div class="form-grid"><label>Type<select id="transaction-type" required><option value="">Select</option><option value="pemasukan">Income</option><option value="pengeluaran">Expense</option></select></label><label>Category <input id="transaction-category" type="text" placeholder="Sales, Salary..." required /></label><label>Amount (Rp) <input id="transaction-amount" type="number" min="0" placeholder="0" required /></label><label class="full">Description <input id="transaction-description" type="text" placeholder="Optional notes" /></label></div><div class="form-actions"><button type="submit" class="primary">Save</button><button type="button" id="resetForm" class="ghost">Reset</button></div><div id="formFeedback" class="feedback" aria-live="polite"></div></form></div>
       </section>
 
-      <section id="piutang" class="screen" style="display:none">
-        <div class="card">
-          <h3>Piutang</h3>
-          <form id="add-piutang-form" class="form-row">
-            <div class="field"><label>Nama</label><input id="piutang-name" required></div>
-            <div class="field"><label>Jumlah</label><input id="piutang-amount" type="number" required></div>
-            <div class="field full actions"><button class="primary" type="submit">Simpan Piutang</button></div>
-          </form>
-          <div id="piutang-list" class="transactions"></div>
-        </div>
+      <section id="piutang" class="screen" data-screen style="display:none">
+        <div class="card"><h3>Receivables</h3><form id="add-piutang-form" class="inline" novalidate><input id="piutang-name" placeholder="Debtor name" required /><input id="piutang-amount" placeholder="Amount" type="number" min="0" required /><button class="primary" type="submit">Add</button></form><div id="piutang-list" class="transactions"></div></div>
       </section>
 
-      <section id="hutang" class="screen" style="display:none">
-        <div class="card">
-          <h3>Hutang</h3>
-          <form id="add-hutang-form" class="form-row">
-            <div class="field"><label>Nama</label><input id="hutang-name" required></div>
-            <div class="field"><label>Jumlah</label><input id="hutang-amount" type="number" required></div>
-            <div class="field full actions"><button class="primary" type="submit">Simpan Hutang</button></div>
-          </form>
-          <div id="hutang-list" class="transactions"></div>
-        </div>
+      <section id="hutang" class="screen" data-screen style="display:none">
+        <div class="card"><h3>Payables</h3><form id="add-hutang-form" class="inline" novalidate><input id="hutang-name" placeholder="Creditor name" required /><input id="hutang-amount" placeholder="Amount" type="number" min="0" required /><button class="primary" type="submit">Add</button></form><div id="hutang-list" class="transactions"></div></div>
       </section>
 
-      <section id="reports" class="screen" style="display:none">
-        <div class="card">
-          <h3>Laporan</h3>
-          <p>Total Piutang Belum Lunas: <strong id="total-piutang">Rp 0</strong></p>
-          <p>Total Hutang Belum Lunas: <strong id="total-hutang">Rp 0</strong></p>
-          <div class="actions-row">
-            <button id="export-json" class="ghost">Export JSON</button>
-            <button id="clear-data" class="ghost">Reset Data</button>
-          </div>
-        </div>
+      <section id="reports" class="screen" data-screen style="display:none">
+        <div class="card"><h3>Reports</h3><p>Export, print, or generate quick summaries.</p><div class="actions-row"><button id="exportCsv" class="ghost">Export CSV</button><button id="printReport" class="ghost">Print Report</button></div></div>
       </section>
 
     </main>
   </div>
 
   <script src="script.js"></script>
+  <script>lucide.replace()</script>
 </body>
 </html>
